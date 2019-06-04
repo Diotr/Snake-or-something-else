@@ -1,44 +1,39 @@
 var canvas =document.getElementById("myCanvas");
 var context =canvas.getContext("2d"); 
-context.fillStyle = "#66ffff";
-context.fillRect(0,0,canvas.width,canvas.height);
+//context.fillStyle = "#66ffff";
+//context.fillRect(0,0,canvas.width,canvas.height);
+var x=10;
+var y=30;
+//var up=x+4;
+//var down =x-4;
 
-var headWidth =40, headHeight = 40,headColor ="#426ef4",headYposition =150, headXposition = 150;
-var snake = canvas.getContext("2d");
-var directionX;
-var directionY;
-snake.fillStyle=headColor;
-function draw(){
-    snake.clearRect(0, 0, canvas.width, canvas.height);
-    //context.fillRect(0,0,canvas.width,canvas.height);
-    snake.fillRect(headXposition,headYposition,headHeight,headWidth);
+function drawSnake(a,b){
     
+context.clearRect(0,0,canvas.width,canvas.height)
+//context.beginPath();
+context.fillRect(x, y, 10, 10);
+context.fillStyle = "#0095DD";
+context.fill();
+//context.closePath();
+console.log("x="+x)
+if (x==350){
+   
+    console.log("koniec")
+}
+var a;
+var b;
+x=x+a;
+y=y+b;
+
 }
 
-function moveUp(){
-//console.log(headYposition+=10)
-headYposition-=10;
-
-draw();
-}
-
-function moveDown(){
-    console.log(headYposition+=10)
-  
-    
-    draw();
-    }
-
-    function moveLeft(){
-        console.log(headXposition-=10)
-       
         
-        draw();
-        }
 
-        function moveRight(){
-            console.log(headXposition+=10)
-            
-            
-            draw();
-            }
+
+function moveUp(){ 
+    clearInterval(drawSnake);
+    setInterval(drawSnake, 100, 0,-5)}
+
+function moveDown(){ 
+    
+    setInterval(drawSnake, 30,0,3)}
