@@ -4,8 +4,8 @@ var context =canvas.getContext("2d");
 //context.fillRect(0,0,canvas.width,canvas.height);
 var x=10;
 var y=30;
-//var up=x+4;
-//var down =x-4;
+var snakeInterval;
+
 
 function drawSnake(a,b){
     
@@ -16,6 +16,7 @@ context.fillStyle = "#0095DD";
 context.fill();
 //context.closePath();
 console.log("x="+x)
+console.log("y="+y)
 if (x==350){
    
     console.log("koniec")
@@ -31,9 +32,22 @@ y=y+b;
 
 
 function moveUp(){ 
-    clearInterval(drawSnake);
-    setInterval(drawSnake, 100, 0,-5)}
+    clearInterval(snakeInterval);
+    snakeInterval=setInterval(drawSnake, 100, 0,-5)}
 
 function moveDown(){ 
     
-    setInterval(drawSnake, 30,0,3)}
+    clearInterval(snakeInterval);
+    snakeInterval=setInterval(drawSnake, 100, 0,5)}
+
+   
+    function moveLeft(){ 
+    
+        clearInterval(snakeInterval);
+        snakeInterval=setInterval(drawSnake, 100, -5,0)}
+
+        function moveRight(){ 
+    
+            clearInterval(snakeInterval);
+            snakeInterval=setInterval(drawSnake, 100, 5,0)}
+    
