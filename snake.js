@@ -1,53 +1,105 @@
-var canvas =document.getElementById("myCanvas");
-var context =canvas.getContext("2d"); 
-//context.fillStyle = "#66ffff";
-//context.fillRect(0,0,canvas.width,canvas.height);
-var x=10;
-var y=30;
+var canvas = document.getElementById("myCanvas");
+var context = canvas.getContext("2d");
+
+//variables for snakes head
+var x = canvas.width/2;
+var y = canvas.height/2;
 var snakeInterval;
 
+//variables for snakes food
 
-function drawSnake(a,b){
-    
-context.clearRect(0,0,canvas.width,canvas.height)
-//context.beginPath();
-context.fillRect(x, y, 10, 10);
-context.fillStyle = "#0095DD";
-context.fill();
-//context.closePath();
-console.log("x="+x)
-console.log("y="+y)
-if (x==350){
+var foodX;
+var foodY;
+
+
+
+function draw(a, b) {
+    //draw the snake
    
-    console.log("koniec")
+    foodDetection();
+    borderDetection()
+    context.clearRect(0, 0, canvas.width, canvas.height)
+    
+    context.fillRect(x, y, 10, 10);
+    context.fillStyle = "#0095DD";
+    context.fill();
+    
+    //console.log("x=" + x)
+   // console.log("y=" + y)
+    if (x == 350) {
+
+        console.log("koniec")
+    }
+    var a;
+    var b;
+    x = x + a;
+    y = y + b;
+    //draw the food
+    context.fillRect(foodX, foodY, 10, 10);
+    context.fillStyle = "#0095DD";
+    context.fill();
+
+
 }
-var a;
-var b;
-x=x+a;
-y=y+b;
+
+
+function moveUp() {
+    clearInterval(snakeInterval);
+    snakeInterval = setInterval(draw, 20, 0, -1)
+}
+
+function moveDown() {
+
+    clearInterval(snakeInterval);
+    snakeInterval = setInterval(draw, 20, 0, 1)
+}
+
+
+function moveLeft() {
+
+    clearInterval(snakeInterval);
+    snakeInterval = setInterval(draw, 20, -1, 0)
+}
+
+function moveRight() {
+
+    clearInterval(snakeInterval);
+    snakeInterval = setInterval(draw, 20, 1, 0)
+}
+
+function borderDetection(){
+
+if(x==0||x==canvas.width||y==0||y==canvas.height){
+    clearInterval(snakeInterval)
+    console.log("game over")
+    x = canvas.width/2;
+     y = canvas.height/2;
+    context.clearRect(0, 0, canvas.width, canvas.height)
+}
 
 }
 
-        
+function start(){
+//create random coordinates of food for snake
+//starts the game
 
+foodX =Math.floor(Math.random() * (canvas.width - 0 + 1) ) + 0;
+foodY =Math.floor(Math.random() * (canvas.height - 0 + 1) ) + 0;
+console.log("random coord "+foodX+" "+foodY)
+moveRight();
+}
 
-function moveUp(){ 
+function foodDetection(){
+    console.log(x+" "+y)
+console.log(foodX+" "+foodY)
+if (x==foodX && y==foodY){
     clearInterval(snakeInterval);
-    snakeInterval=setInterval(drawSnake, 100, 0,-5)}
+console.log("punkt")
 
-function moveDown(){ 
-    
-    clearInterval(snakeInterval);
-    snakeInterval=setInterval(drawSnake, 100, 0,5)}
 
-   
-    function moveLeft(){ 
-    
-        clearInterval(snakeInterval);
-        snakeInterval=setInterval(drawSnake, 100, -5,0)}
+}
 
-        function moveRight(){ 
-    
-            clearInterval(snakeInterval);
-            snakeInterval=setInterval(drawSnake, 100, 5,0)}
-    
+}
+
+
+
