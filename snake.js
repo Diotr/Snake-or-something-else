@@ -6,15 +6,59 @@ var x = canvas.width/2;
 var y = canvas.height/2;
 var snakeInterval;
 
+
 //variables for snakes food
 
 var foodX;
 var foodY;
 
+var score=0;
+var lives=3;
 
+//keyboard input
+
+canvas.onkeydown = function (e) {
+    if (e.key === '38' || e.key === 'ArrowDown') {
+        e.view.event.preventDefault();
+    }
+}
+document.addEventListener('keydown', function(event) {
+    if (event.keyCode == 37) {
+        moveLeft();
+
+    }
+    else if (event.keyCode == 39) {
+        moveRight();
+    }
+    else if (event.keyCode == 38) {
+        moveUp();
+    }
+    else if (event.keyCode == 40) {
+        moveDown();
+    }
+}, true);
+
+//call function which returns number of lives, display press start to play or game over
+gameInfo();
+
+function gameInfo(){
+    document.getElementById("lives").innerHTML=("Lives = "+lives);
+    if(score==0||lives==3){
+        document.getElementById("gameplayInfo").innerHTML=("Press Start to play!")
+    }
+    else if(lives==0){
+        document.getElementById("gameplayInfo").innerHTML=("GAME OVER!!!")
+    }
+else{
+
+}
+    
+}
 
 function draw(a, b) {
     //draw the snake
+   if(lives!=0){
+       
    
     foodDetection();
     borderDetection()
@@ -24,12 +68,7 @@ function draw(a, b) {
     context.fillStyle = "#0095DD";
     context.fill();
     
-    //console.log("x=" + x)
-   // console.log("y=" + y)
-    if (x == 350) {
-
-        console.log("koniec")
-    }
+   
     var a;
     var b;
     x = x + a;
@@ -39,7 +78,11 @@ function draw(a, b) {
     context.fillStyle = "#0095DD";
     context.fill();
 
+   }
+   else{
+    context.clearRect(0, 0, canvas.width, canvas.height)
 
+   }
 }
 
 
@@ -75,6 +118,9 @@ if(x==0||x==canvas.width||y==0||y==canvas.height){
     x = canvas.width/2;
      y = canvas.height/2;
     context.clearRect(0, 0, canvas.width, canvas.height)
+    lives--;
+    
+    gameInfo();
 }
 
 }
@@ -82,20 +128,24 @@ if(x==0||x==canvas.width||y==0||y==canvas.height){
 function start(){
 //create random coordinates of food for snake
 //starts the game
-
+if(lives>0){
 foodX =Math.floor(Math.random() * (canvas.width - 0 + 1) ) + 0;
 foodY =Math.floor(Math.random() * (canvas.height - 0 + 1) ) + 0;
 console.log("random coord "+foodX+" "+foodY)
-moveRight();
+if(score<1){
+    moveRight();}
+}
+else document.getElementById("gamelayInfo").innerHTML = ("Game over!!!");
 }
 
 function foodDetection(){
-    console.log(x+" "+y)
-console.log(foodX+" "+foodY)
-if (x==foodX && y==foodY){
-    clearInterval(snakeInterval);
+    console.log("wąż  "+x+" "+y)
+console.log("jedzenie  "+foodX+" "+foodY)
+if  ((Math.abs(x - foodX) <= 10)&&(Math.abs(y - foodY) <= 10)){
+    score++;
 console.log("punkt")
-
+start();
+document.getElementById("displayScore").innerHTML=("Score ="+score);
 
 }
 
