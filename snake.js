@@ -1,19 +1,22 @@
 var canvas = document.getElementById("myCanvas");
 var context = canvas.getContext("2d");
-
+var intervalRatio = 110;
 //variables for snakes head
 var x = canvas.width/2;
 var y = canvas.height/2;
 var snakeInterval;
 
-
+//var for snakes body
+var bodyElements = [];
 //variables for snakes food
 
 var foodX;
 var foodY;
-
+//gameplay variables
 var score=0;
-var lives=3;
+var lives=1;
+//prevents movement in opposite direction
+var snakeDirectionID =0;
 
 //keyboard input
 
@@ -58,7 +61,7 @@ else{
 function draw(a, b) {
     //draw the snake
    if(lives!=0){
-       
+    updateBodylength(); 
    
     foodDetection();
     borderDetection()
@@ -83,32 +86,53 @@ function draw(a, b) {
     context.clearRect(0, 0, canvas.width, canvas.height)
 
    }
+
+   //drawTheBody
+   for(i=0; i<bodyElements.length;i++){
+
+console.log("z array"+bodyElements[i].bx+"      "+bodyElements[i].by)
+    context.fillRect(bodyElements[i].bx,bodyElements[i].by, 10, 10);
+    context.fillStyle = "#0095DD";
+    context.fill();
+
+   }
+  
 }
 
 
 function moveUp() {
+    if (snakeDirectionID!=2){
+    snakeDirectionID =1;
     clearInterval(snakeInterval);
-    snakeInterval = setInterval(draw, 20, 0, -1)
+    snakeInterval = setInterval(draw, intervalRatio, 0, -5)
+}
 }
 
 function moveDown() {
-
+    if (snakeDirectionID!=1){
+    snakeDirectionID =2;
     clearInterval(snakeInterval);
-    snakeInterval = setInterval(draw, 20, 0, 1)
+    snakeInterval = setInterval(draw, intervalRatio, 0, 5)
+}
 }
 
 
 function moveLeft() {
-
+    if (snakeDirectionID!=4){
+    snakeDirectionID =3;
     clearInterval(snakeInterval);
-    snakeInterval = setInterval(draw, 20, -1, 0)
+    snakeInterval = setInterval(draw, intervalRatio, -5, 0)
+}
 }
 
 function moveRight() {
-
+    if (snakeDirectionID!=3){
+    snakeDirectionID =4;
     clearInterval(snakeInterval);
-    snakeInterval = setInterval(draw, 20, 1, 0)
+    snakeInterval = setInterval(draw, intervalRatio, 5, 0)
 }
+}
+
 
 function borderDetection(){
 
@@ -150,6 +174,20 @@ document.getElementById("displayScore").innerHTML=("Score ="+score);
 }
 
 }
+//body
+class BodyElement{
+    constructor(bx,by){
+        this.bx=bx;
+        this.by=by;
+    }
+}
+function updateBodylength(){
+var b = new BodyElement(x,y);
+bodyElements.unshift(b);
+if (bodyElements.length>15){
+bodyElements.pop(b);}
 
+//console.log(JSON.stringify(bodyElements))
 
+}
 
