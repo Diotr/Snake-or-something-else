@@ -1,6 +1,6 @@
 var canvas = document.getElementById("myCanvas");
 var context = canvas.getContext("2d");
-var intervalRatio = 110;
+var intervalRatio = 80;
 //variables for snakes head
 var x = canvas.width/2;
 var y = canvas.height/2;
@@ -15,13 +15,14 @@ var foodY;
 //gameplay variables
 var score=0;
 var lives=1;
+var foodEaten=false;
 //prevents movement in opposite direction
 var snakeDirectionID =0;
 
 //keyboard input
 
 canvas.onkeydown = function (e) {
-    if (e.key === '38' || e.key === 'ArrowDown') {
+    if (e.key === '38' || e.key === '40') {
         e.view.event.preventDefault();
     }
 }
@@ -35,9 +36,11 @@ document.addEventListener('keydown', function(event) {
     }
     else if (event.keyCode == 38) {
         moveUp();
+        event.preventDefault();
     }
     else if (event.keyCode == 40) {
         moveDown();
+        event.preventDefault();
     }
 }, true);
 
@@ -60,15 +63,18 @@ else{
 
 function draw(a, b) {
     //draw the snake
+    
    if(lives!=0){
     updateBodylength(); 
-   
+    updateSpeed();
     foodDetection();
-    borderDetection()
+    borderDetection();
+    bodyDetection();
+    
     context.clearRect(0, 0, canvas.width, canvas.height)
     
     context.fillRect(x, y, 10, 10);
-    context.fillStyle = "#0095DD";
+    context.fillStyle = "#8cf442";
     context.fill();
     
    
@@ -78,7 +84,7 @@ function draw(a, b) {
     y = y + b;
     //draw the food
     context.fillRect(foodX, foodY, 10, 10);
-    context.fillStyle = "#0095DD";
+    context.fillStyle = "#f44277";
     context.fill();
 
    }
@@ -90,7 +96,7 @@ function draw(a, b) {
    //drawTheBody
    for(i=0; i<bodyElements.length;i++){
 
-console.log("z array"+bodyElements[i].bx+"      "+bodyElements[i].by)
+
     context.fillRect(bodyElements[i].bx,bodyElements[i].by, 10, 10);
     context.fillStyle = "#0095DD";
     context.fill();
@@ -146,6 +152,41 @@ if(x==0||x==canvas.width||y==0||y==canvas.height){
     
     gameInfo();
 }
+}
+//detect collision with snakes body
+function bodyDetection(){
+  
+//if(bodyElements.filter(function(BodyElement){
+//return BodyElement.bx===x&&BodyElement.by===y}))
+for(var i =1;i<bodyElements.length;i++){
+   // console.log("Tablica = "+"x "+x+"y   "+y+"   "+bodyElements[i].bx+"   "+bodyElements[i].by);
+    
+if(bodyElements[i].bx==x&&bodyElements[i].by==y){
+console.log("Kolizja");
+
+}
+
+   
+}
+}
+
+
+
+function foodDetection(){
+   
+
+if  ((Math.abs(x - foodX) <= 10)&&(Math.abs(y - foodY) <= 10)){
+    score++;
+    foodEaten=true;
+
+start();
+document.getElementById("displayScore").innerHTML=("Score ="+score);
+
+}
+
+  else{
+      foodEaten=false;
+  }  
 
 }
 
@@ -155,25 +196,14 @@ function start(){
 if(lives>0){
 foodX =Math.floor(Math.random() * (canvas.width - 0 + 1) ) + 0;
 foodY =Math.floor(Math.random() * (canvas.height - 0 + 1) ) + 0;
-console.log("random coord "+foodX+" "+foodY)
+
 if(score<1){
     moveRight();}
 }
 else document.getElementById("gamelayInfo").innerHTML = ("Game over!!!");
 }
 
-function foodDetection(){
-    console.log("wąż  "+x+" "+y)
-console.log("jedzenie  "+foodX+" "+foodY)
-if  ((Math.abs(x - foodX) <= 10)&&(Math.abs(y - foodY) <= 10)){
-    score++;
-console.log("punkt")
-start();
-document.getElementById("displayScore").innerHTML=("Score ="+score);
 
-}
-
-}
 //body
 class BodyElement{
     constructor(bx,by){
@@ -182,12 +212,22 @@ class BodyElement{
     }
 }
 function updateBodylength(){
+   
 var b = new BodyElement(x,y);
 bodyElements.unshift(b);
-if (bodyElements.length>15){
-bodyElements.pop(b);}
-
-//console.log(JSON.stringify(bodyElements))
-
+if (foodEaten==false&&bodyElements.length>15){
+    bodyElements.pop(b); 
+    
 }
+}
+function updateSpeed()
+{
+    if (score%5==0){
+        intervalRatio-25;
+    }
+}
+function gameOver{
 
+
+    
+}
