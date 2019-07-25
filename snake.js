@@ -71,7 +71,7 @@ function draw(a, b) {
         context.clearRect(0, 0, canvas.width, canvas.height)
 
         context.fillRect(x, y, 10, 10);
-        context.fillStyle = "#8cf442";
+        context.fillStyle = "#147710";
         context.fill();
 
 
@@ -81,7 +81,7 @@ function draw(a, b) {
         y = y + b;
         //draw the food
         context.fillRect(foodX, foodY, 10, 10);
-        context.fillStyle = "#f44277";
+        context.fillStyle = "#7a22ad";
         context.fill();
 
     }
@@ -143,7 +143,7 @@ function moveRight() {
 
 function borderDetection() {
 
-    if (x == 0 || (x == canvas.width - 5) || y == 0 || (y == canvas.height - 5)) {
+    if ((x == 100) || (x == canvas.width - 5) || y == 0 || (y == canvas.height - 5)) {
 
         gameOver();
         gameInfo();
