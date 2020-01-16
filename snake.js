@@ -236,3 +236,5 @@ function gameOver() {
         console.log("score" + score);
     }
 }
+
+//comments
