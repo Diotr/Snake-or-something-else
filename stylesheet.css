@@ -1,0 +1,22 @@
+html,body{
+    height: 100%;
+    background-image: url('rainbow.jpg');
+}
+
+#gameWindow{
+    position: relative;
+    height:100%;
+    
+}
+#myCanvas{
+    background-image: url(gray-surface-3255761.jpg);
+}
+
+button{
+    width: 70px;
+}
+
+h1{
+    font-family: fantasy;
+    color: green;
+}

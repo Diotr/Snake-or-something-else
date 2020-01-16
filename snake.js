@@ -21,7 +21,7 @@ var checkIfGameIsInProgress =true;
 var snakeDirectionID = 0;
 
 //keyboard input
-
+start();
 canvas.onkeydown = function (e) {
     if (e.key === '38' || e.key === '40') {
         e.view.event.preventDefault();
@@ -30,7 +30,6 @@ canvas.onkeydown = function (e) {
 document.addEventListener('keydown', function (event) {
     if (event.keyCode == 37) {
         moveLeft();
-
     }
     else if (event.keyCode == 39) {
         moveRight();
@@ -55,25 +54,22 @@ function gameInfo() {
         document.getElementById("gameplayInfo").innerHTML = ("GAME OVER!!!")
     }
     
-
 }
 
 function draw(a, b) {
     //draw the snake
 
     if (lives != 0) {
+        context.fillRect(x, y, 10, 10);
+        context.fillStyle = "#147710";
+        context.fill();
         updateBodylength();
         updateSpeed();
         foodDetection();
         borderDetection();
         bodyDetection();
-
         context.clearRect(0, 0, canvas.width, canvas.height)
-
-        context.fillRect(x, y, 10, 10);
-        context.fillStyle = "#147710";
-        context.fill();
-
+        
 
         var a;
         var b;
@@ -83,17 +79,13 @@ function draw(a, b) {
         context.fillRect(foodX, foodY, 10, 10);
         context.fillStyle = "#7a22ad";
         context.fill();
-
     }
     else {
         context.clearRect(0, 0, canvas.width, canvas.height)
-
     }
 
     //drawTheBody
     for (i = 0; i < bodyElements.length; i++) {
-
-
         context.fillRect(bodyElements[i].bx, bodyElements[i].by, 10, 10);
         context.fillStyle = "#0095DD";
         context.fill();
@@ -143,7 +135,7 @@ function moveRight() {
 
 function borderDetection() {
 
-    if ((x == 100) || (x == canvas.width - 5) || y == 0 || (y == canvas.height - 5)) {
+    if ((x == (-5)) || (x == canvas.width - 5) || y == (-5) || (y == canvas.height - 5)) {
 
         gameOver();
         gameInfo();
